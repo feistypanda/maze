@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>My summer project</title>
+        <style type="text/css">
+        	body {
+        		width: 500px;
+        		font-size: 15.7px;
+        	}
+        	a:hover {
+        		color: red;
+        	}
+        </style>
+    </head>
+    <body>
+    	<h1 id="page-top">My summer project</h1>
+    	<h2>Introduction</h2>
+    	<p>
+    		For my summer project I am makig a computer game with procesing.JS.   
+    		The game will have a rectangle bat at the bottom of the screen that you can move left-right, 
+    		a ball that bounces around the screen and off of the bat, 
+    		and bricks that float around the top of the screen. 
+       	</p>
+       	<h2>Objective</h2>
+       	hit all the bricks with the ball with out leting the ball get past the bat
+       	<h2>Controls</h2>
+		<ul>
+			<li>RIGHT ARROW: moves the bat right</li>
+			<li>LEFT ARROW: moves the bat left</li>
+		</ul>
+		
+				<h2>Table of contents</h2>
+    	<ul>
+    		<li><a href="#brick">Displaying the bricks</a></li>
+    		<li><a href="#ball">Making the ball</a></li>
+    		<li><a href="#bat">Making the bat</a></li>
+    		<li><a href="#bounce-ball">Making the ball bounce off of the bat</a></li>
+    	</ul>
+		<h2 id="brick">Displaying the bricks</h2>
+		[<a href="#page-top">top</a>]
+		<p>
+			I started by making a program to display the bricks 
+			the program to display the bricks uses an input of a object including things like the X and Y positions of the bricks and draws a rectangle at those positions
+
+		</p>
+<pre>
+<code>
+var level1 = {
+	brick: {
+		x: [0, 30, 60, 90],
+		y: [20, 20, 20, 20],
+		mat: [0, 0, 0, 0] 
+	},
+	bat: {
+		x: 200,
+		y: 370,
+		w: 100,
+		h: 30
+	}
+	name: "level1"
+}
+var levels = [level1];
+var page = 2;
+var game = function(x, y){
+	for(var i = 0; i < levels[level].brick.x; i++){
+		//sets a varible called x to the x position that the rectangle will be 
+		//drawn
+		var x = levels[level].brick.x[i];
+		//sets a varible called y to the y position that the rectangle will be 
+		//drawn
+		var y = levels[level].brick.y[i];
+		// draws the rectangle at the varibles x and y
+		rect(x, y, 30, 20);
+	}
+}
+// calls this function 60 times a second
+draw = function(){
+	if (page == 2){
+		background(255, 255, 255);
+		// calls the function 'game'
+		game();
+	}
+}
+</code>
+</pre>
+		<p>
+			the resut looks like this:
+		</p>
+		<img src="file:///Users/leo/Documents/ProcessingJS/projects/docs/imgs/bricks.png">
+		<h2 id="ball">Making the ball</h2>
+		[<a href="#page-top">top</a>]
+		<p>
+			then I made the program for the ball
+			the program that makes the ball bounce off of the bat uses 4 main varibles, xSpeed, ySpeed, x, y. every frame the program adds xSpeed to x and adds ySpeed to y then draws the ball at the x and y cordinates then it checks if the ball is on the left or right edge, if it is it changes xSpeed by times -1. If the ball is on the top or bottom edge it dose the same but for ySpeed.
+			
+			
+		</p>
+<pre>
+<code>
+var x = 200;
+var y = 200;
+var xSpeed = 1;
+var ySpeed = 1.5;
+draw = function(){
+	if(page == 2){
+		// add xSpeed to x
+		x += xSpeed;
+		// add ySpeed to y
+		y += ySpeed;
+		ellipse(x, y, 10, 10);
+		// if toching the left or right edge, reverse xSpeed
+		if (x > 400 || x < 0){
+			xSpeed *= -1;
+		}
+		// if toching the top or bottom edge, reverse ySpeed
+		if(y > 400 || y < 0){
+			ySpeed *= -1;
+		}
+		// call the game function
+		game();
+	}
+};
+</code>
+</pre>
+		<h2 id="bat">Making the bat</h2>
+		[<a href="#page-top">top</a>]
+		<p>
+			Then I made the program for the bat.
+			when a key is pressed, the program checks if the key is the right arrow key, if it is then it adds 5 to the x value of the bat. If the left arrow key is pressed it subtracts 5 from the x value of the bat. then it calls the game function with the x and y values for the bat 
+		</p>
+<pre>
+<code>
+var game = function(bx, by){
+	rect(bx, by, levels[level].bat.w, levels[level].bat.h);
+}
+keyPressed = function(){
+	if (keyCode == 39){
+		levels[level].bat.x += 5;
+	}else if (keyCode == 37){
+		levels[level].bat.x -= 5;
+	}
+};
+draw = function(){
+	if (page == 2){
+		game(levels[level].bat.x, levels[level].bat.y)
+	}
+};
+</code>
+</pre>
+		<h2 id="bounce-ball">Making the ball bounce of of the bat</h2>
+		[<a href="#page-top">top</a>]
+		<p>
+			I decided then to make the program to make the ball bounce off of the bat Ò
+			The program to make the ball bounce off of the bat if the x position of the ball is in between the left and right edges of the bat and the y position + 10 is the y position of the bat, if it is then reverse ySpeed. 	
+		</p>
+		<pre>
+			draw = function(){
+				if(x > levels[level].bat.x && x < levels[level].bat.x + levels[level].bat.w && y > levels[level].bat.y - 10){
+					ySpeed *= -1;
+				}
+			}; 
+		</pre>
+	</body>
+</html>
