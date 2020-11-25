@@ -1,0 +1,126 @@
+<!DOCTYPE html>    
+<html> 
+    <head>
+        <title>ms</title> 
+    </head>
+    <body>
+        <p align="center"> 
+        <canvas id="mycanvas"></canvas> 
+        </p>
+    </body> 
+    <script src="/Users/leo/Documents/ProcessingJS/lib/processing.js"></script> 
+    <script>
+        var mazeData = [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [0, 0, 1, 0, 0, 0, 1, 1, 1],
+        [1, 0, 1, 0, 1, 0, 1, 1, 1],
+        [1, 0, 0, 0, 0, 0, 1, 1, 1],
+        [1, 1, 1, 1, 1, 0, 1, 1, 1],
+        [1, 1, 0, 0, 0, 0, 1, 1, 1],
+        [1, 1, 0, 1, 1, 1, 1, 0, 0],
+        [1, 1, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ];
+
+        var sketchProc = function(processingInstance) {
+            with (processingInstance) {
+                size(600, 600); 
+                frameRate(60);
+                // program here
+                var x; 
+                var y;
+                var s = [0, 0];
+                var first = true;
+                var blockSize = width/3;
+                var mode = "hard";
+                var mazeData = [
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1],
+                [1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0],
+                [1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1],
+                [1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1],
+                [1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1],
+                [1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1],
+                [1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1],
+                [1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
+                [1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1],
+                [0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1],
+                [1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1],
+                [1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1],
+                [1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1],
+                [1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1],
+                [1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                ];
+                for (var i = 0; i < mazeData.length; i++) {
+                    if (mazeData[i][0] === 0) {
+                        s[1] = i;
+                    }
+                }
+                var playerX = s[0];
+                var playerY = s[1];
+                noStroke();
+                background(255, 255, 255);
+                var drawMaze = function(){
+                    for(y = 0; y < mazeData.length; y++){
+                        for(x = 0; x < mazeData[y].length; x++){
+                            if (mazeData[y][x] === 0) {
+                                fill(255, 255, 255);
+                            }else if (mazeData[y][x] === 1) {
+                                fill(0, 0, 0);
+                            }else if (mazeData[y][x] === 2) {
+                                fill(0, 255, 0);
+                            }
+                            rect(blockSize * (x - playerX), blockSize * (y - playerY), blockSize, blockSize);
+                        }
+                    }
+                };
+                var player = function(x, y){
+                    fill(255, 0, 0);
+                    rect(x, y, blockSize/2, blockSize/2);
+                }
+                var stuf = function(){
+                    pushMatrix();
+                    translate(width/2 - blockSize/2, height/2 - blockSize/2);
+                    first = false;
+                    background(255, 255, 255);
+                    drawMaze();
+                    player(0 + blockSize/4, 0 + blockSize/4);
+                    popMatrix();
+
+                };
+                draw = function(){
+                    if (first) {
+                        stuf();
+                    }
+                };
+                keyPressed = function(){
+                    if (keyCode == 39 && mazeData[playerY][playerX + 1] == 0) {
+                        playerX++;
+                    }else if (keyCode == 37 && mazeData[playerY][playerX - 1] == 0) {
+                        playerX--;
+                    }else if (keyCode == 40 && mazeData[playerY + 1][playerX] == 0) {
+                        playerY++;
+                    }else if (keyCode == 38 && mazeData[playerY - 1][playerX] == 0) {
+                        playerY--;
+                    }else if (keyCode == 32) {
+                        playerX = 0;
+                        playerY = 0;
+                    }
+                    stuf();
+                };          
+            }
+        };
+
+    var canvas = document.getElementById("mycanvas"); 
+    var processingInstance = new Processing(canvas, sketchProc); 
+ </script>
+
+</html>
