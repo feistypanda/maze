@@ -1,11 +1,11 @@
 <!DOCTYPE html>    
 <html> 
     <head>
-        <title>ms</title> 
+        <title>Maze</title> 
     </head>
     <body>
         <p align="center"> 
-        <canvas id="mycanvas"></canvas> 
+            <canvas id="mycanvas"></canvas> 
         </p>
     </body> 
     <script src="/Users/leo/Documents/ProcessingJS/lib/processing.js"></script> 
@@ -17,38 +17,39 @@
                 // program here
                 var x; 
                 var y;
-                var s = [0, 0];
-                var first = true;
+                var s = [1, 0];
+                var first = false;
                 var blockSize = width/3;
                 var mode = "h";
                 var nlkey = 37;
+                var page = 2;
                 var mazeData = [
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
-                [1, 0, 0, 0, 0, 0 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
-                [1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-                [1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-                [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0],
-                [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0],
-                [1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0],
-                [1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
-                [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0],
-                [1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0],
-                [1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0],
-                [1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0],
-                [1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-                [1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0],
-                [0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0],
-                [1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0],
-                [1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0],
-                [1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0],
-                [1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0],
-                [1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0],
-                [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+                [1, 1, 0, 0, 0, 0, 0 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+                [1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+                [1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+                [1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0],
+                [1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0],
+                [1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0],
+                [1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+                [1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0],
+                [1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0],
+                [1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0],
+                [1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+                [1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+                [1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0],
+                [1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0],
+                [1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0],
+                [1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0],
+                [1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0],
+                [1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
                 ];
                 for (var i = 0; i < mazeData.length; i++) {
-                    if (mazeData[i][0] === 0) {
+                    if (mazeData[i][1] == 0) {
                         s[1] = i;
                     }
                 }
@@ -56,80 +57,123 @@
                 var playerY = s[1];
                 noStroke();
                 background(255, 255, 255);
-                if (mode === "h") {
-                    blockSize = width/3;
-                    var drawMaze = function(){
-                        for(y = 0; y < mazeData.length; y++){
-                            for(x = 0; x < mazeData[y].length; x++){
-                                if (mazeData[y][x] === 0) {
-                                    fill(255, 255, 255);
-                                }else if (mazeData[y][x] === 1) {
-                                    fill(0, 0, 0);
-                                }else if (mazeData[y][x] === 2) {
-                                    fill(0, 255, 0);
+                var Button = function(x, y, width, height, mode, la){
+                    this.x = x;
+                    this.y = y;
+                    this.width = width;
+                    this.height = height;
+                    this.mode = mode;
+                    this.label = la;                    
+                }
+                Button.prototype.draw = function() {
+                    stroke(0, 0, 0);
+                    noFill();
+                    rect(this.x, this.y, this.width, this.height);
+                    fill(0, 0, 0)
+                    text(this.label, this.x + 2, this.y + 11);
+                };
+                Button.prototype.isP = function(x, y) {
+                    return x > this.x &&
+                    x < this.x + this.width &&
+                    y > this.y &&
+                    y < this.y + this.height;
+                };
+                Button.prototype.handleMouseClick = function() {
+                    if (this.isP(mouseX, mouseY)) {
+                        background(255, 255, 255)
+                        mode = this.mode;
+                        page = 2;
+                        first = true;
+                        doCheck();
+                    }
+                };
+                var btn1 = new Button(200, 200, 20, 20, "e", "e");
+                var doCheck = function(){
+
+                };
+                if (page == 2) {
+                    if (mode === "h") {
+                        blockSize = width/3;
+                        var drawMaze = function(){
+                            for(y = 0; y < mazeData.length; y++){
+                                for(x = 0; x < mazeData[y].length; x++){
+                                    if (mazeData[y][x] === 0) {
+                                        fill(255, 255, 255);
+                                    }else if (mazeData[y][x] === 1) {
+                                        fill(0, 0, 0);
+                                    }else if (mazeData[y][x] === 2) {
+                                        fill(0, 255, 0);
+                                    }
+                                    rect(blockSize * (x - playerX), blockSize * (y - playerY), blockSize, blockSize);
                                 }
-                                rect(blockSize * (x - playerX), blockSize * (y - playerY), blockSize, blockSize);
                             }
-                        }
-                    };
-                    var stuf = function(){
-                        pushMatrix();
-                        translate(width/2 - blockSize/2, height/2 - blockSize/2);
-                        first = false;
-                        background(255, 255, 255);
-                        drawMaze();
-                        player(0 + blockSize/4, 0 + blockSize/4);
-                        popMatrix();
-                    };
-                }else if (mode === "e") {
-                    blockSize = 30;
-                    var drawMaze = function(){
-                        for(y = 0; y < mazeData.length; y++){
-                            for(x = 0; x < mazeData[y].length; x++){
-                                if (mazeData[y][x] === 0) {
-                                    fill(255, 255, 255);
-                                }else if (mazeData[y][x] === 1) {
-                                    fill(0, 0, 0);
+                        };
+                        var stuf = function(){
+                            pushMatrix();
+                            translate(width/2 - blockSize/2, height/2 - blockSize/2);
+                            first = false;
+                            background(255, 255, 255);
+                            drawMaze();
+                            player(0 + blockSize/4, 0 + blockSize/4);
+                            popMatrix();
+                        };
+                    }else if (mode === "e") {
+                        blockSize = 30;
+                        var drawMaze = function(){
+                            for(y = 0; y < mazeData.length; y++){
+                                for(x = 0; x < mazeData[y].length; x++){
+                                    if (mazeData[y][x] === 0) {
+                                        fill(255, 255, 255);
+                                    }else if (mazeData[y][x] === 1) {
+                                        fill(0, 0, 0);
+                                    }
+                                    rect(x * blockSize, y * blockSize, blockSize, blockSize);
                                 }
-                                rect(x * blockSize, y * blockSize, blockSize, blockSize);
                             }
-                        }
-                    };
-                    var stuf = function(){
-                        first = false;
-                        background(255, 255, 255);
-                        drawMaze();
-                        player(blockSize * playerX + blockSize/4, blockSize * playerY + blockSize/4);
-                    };
+                        };
+                        var stuf = function(){
+                            first = false;
+                            background(255, 255, 255);
+                            drawMaze();
+                            player(blockSize * playerX + blockSize/4, blockSize * playerY + blockSize/4);
+                        };
+                    }
                 }
                 var player = function(x, y){
                     fill(255, 0, 0);
                     rect(x, y, blockSize/2, blockSize/2);
                 }
-                
+                //btn1.draw();
                 draw = function(){
-                    if (first) {
-                        stuf();
+                    if (page === 2) {
+                        if (first) {
+                            stuf();
+                        }
                     }
                 };
+                mousePressed = function(){
+                    btn1.handleMouseClick();
+                }
                 keyPressed = function(){
-                    if (nlkey != keyCode && keyCode == 39 && mazeData[playerY][playerX + 1] == 0) {
-                        playerX++;
-                        nlkey = 37;
-                    }else if (nlkey != keyCode && keyCode == 37 && mazeData[playerY][playerX - 1] == 0) {
-                        playerX--;
-                        nlkey = 39;
-                    }else if (nlkey != keyCode && keyCode == 40 && mazeData[playerY + 1][playerX] == 0) {
-                        playerY++;
-                        nlkey = 38;
-                    }else if (nlkey != keyCode && keyCode == 38 && mazeData[playerY - 1][playerX] == 0) {
-                        playerY--;
-                        nlkey = 40;
-                    }else if (keyCode == 32) {
-                        playerX = s[0];
-                        playerY = s[1];
+                    if (started) {
+                        if (nlkey != keyCode && keyCode == 39 && mazeData[playerY][playerX + 1] == 0) {
+                            playerX++;
+                            nlkey = 37;
+                        }else if (nlkey != keyCode && keyCode == 37 && mazeData[playerY][playerX - 1] == 0) {
+                            playerX--;
+                            nlkey = 39;
+                        }else if (nlkey != keyCode && keyCode == 40 && mazeData[playerY + 1][playerX] == 0) {
+                            playerY++;
+                            nlkey = 38;
+                        }else if (nlkey != keyCode && keyCode == 38 && mazeData[playerY - 1][playerX] == 0) {
+                            playerY--;
+                            nlkey = 40;
+                        }else if (keyCode == 32) {
+                            playerX = s[0];
+                            playerY = s[1];
+                        }
+                        stuf();
                     }
-                    stuf();
                 };          
             }
         };
