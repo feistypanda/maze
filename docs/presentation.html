@@ -5,11 +5,10 @@
         <title>My summer project</title>
         <style type="text/css">
         	body {
-        		width: 500px;
         		font-size: 15.7px;
         	}
         	a:hover {
-        		color: red;
+        		color: blue;
         	}
         </style>
     </head>
@@ -30,13 +29,18 @@
 			<li>LEFT ARROW: moves the bat left</li>
 		</ul>
 		
-				<h2>Table of contents</h2>
+		<h2>Table of contents</h2>
     	<ul>
     		<li><a href="#brick">Displaying the bricks</a></li>
     		<li><a href="#ball">Making the ball</a></li>
     		<li><a href="#bat">Making the bat</a></li>
     		<li><a href="#bounce-ball">Making the ball bounce off of the bat</a></li>
     	</ul>
+    	<br>
+    	<br>
+    	<br>
+    	<br>
+    	<br>
 		<h2 id="brick">Displaying the bricks</h2>
 		[<a href="#page-top">top</a>]
 		<p>
@@ -87,7 +91,7 @@ draw = function(){
 		<p>
 			the resut looks like this:
 		</p>
-		<img src="file:///Users/leo/Documents/ProcessingJS/projects/docs/imgs/bricks.png">
+		<img src="imgs/bricks.png" id="p-bricks">
 		<h2 id="ball">Making the ball</h2>
 		[<a href="#page-top">top</a>]
 		<p>
@@ -123,6 +127,10 @@ draw = function(){
 };
 </code>
 </pre>
+		<p>
+			the ball looks like this:
+		</p>
+		<img src="imgs/ball.png">
 		<h2 id="bat">Making the bat</h2>
 		[<a href="#page-top">top</a>]
 		<p>
@@ -148,18 +156,50 @@ draw = function(){
 };
 </code>
 </pre>
+		<p>
+			the bat looks like this:
+		</p>
+		<img src="imgs/bat.png">
 		<h2 id="bounce-ball">Making the ball bounce of of the bat</h2>
 		[<a href="#page-top">top</a>]
 		<p>
-			I decided then to make the program to make the ball bounce off of the bat Ò
+			I decided then to make the program to make the ball bounce off of the bat.
 			The program to make the ball bounce off of the bat if the x position of the ball is in between the left and right edges of the bat and the y position + 10 is the y position of the bat, if it is then reverse ySpeed. 	
 		</p>
-		<pre>
-			draw = function(){
-				if(x > levels[level].bat.x && x < levels[level].bat.x + levels[level].bat.w && y > levels[level].bat.y - 10){
-					ySpeed *= -1;
-				}
-			}; 
-		</pre>
+<pre>
+<code>
+draw = function(){
+	if(x > levels[level].bat.x && x < levels[level].bat.x + levels[level].bat.w 
+&& y > levels[level].bat.y - 10){
+		// reverse ySpeed
+		ySpeed *= -1;
+	}
+};
+</code>	 
+</pre>
+		<h2 id="check-brick">The program to check if a brick is hit</h2>
+		<p>
+			the program that checks if a brick is hit is a function that uses an input of x, and y.the program inside of the function loops through the x and y positions of the bricks checks if the x, and y inputs are hiting the brick
+		</p>
+<pre>
+<code>
+var isHit = function(x, y){
+	var isht = false;
+	var hp = null;
+	for (var i = 0; i < levels[level].brick.x.length; i++){
+		var bx = levels[level].brick.x[i];
+		var by = levels[level].brick.y[i];
+		if (x > bx && x < bx + 30 && y > by + 20 && y < by + 30){
+			isht = true;
+			hp = i;
+		}
+	}
+	return [isht, hp];
+}	
+</code>
+</pre>
 	</body>
+	<script src="/Users/leo/Documents/ProcessingJS/lib/processing.js"></script>
+	<script>
+	</script>
 </html>

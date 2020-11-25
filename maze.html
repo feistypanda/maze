@@ -22,7 +22,7 @@
                 var blockSize = width/3;
                 var mode = "h";
                 var nlkey = 37;
-                var page = 2;
+                var page = 1;
                 var mazeData = [
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
                 [1, 1, 0, 0, 0, 0, 0 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
@@ -57,13 +57,14 @@
                 var playerY = s[1];
                 noStroke();
                 background(255, 255, 255);
-                var Button = function(x, y, width, height, mode, la){
+                var Button = function(x, y, width, height, mode, la, onC){
                     this.x = x;
                     this.y = y;
                     this.width = width;
                     this.height = height;
                     this.mode = mode;
-                    this.label = la;                    
+                    this.label = la;
+                    this.onC = onC;                    
                 }
                 Button.prototype.draw = function() {
                     stroke(0, 0, 0);
@@ -82,68 +83,96 @@
                     if (this.isP(mouseX, mouseY)) {
                         background(255, 255, 255)
                         mode = this.mode;
-                        page = 2;
                         first = true;
-                        doCheck();
-                    }
-                };
-                var btn1 = new Button(200, 200, 20, 20, "e", "e");
-                var doCheck = function(){
+                        this.onC;
+                        page = 2;
 
-                };
-                if (page == 2) {
-                    if (mode === "h") {
-                        blockSize = width/3;
-                        var drawMaze = function(){
-                            for(y = 0; y < mazeData.length; y++){
-                                for(x = 0; x < mazeData[y].length; x++){
-                                    if (mazeData[y][x] === 0) {
-                                        fill(255, 255, 255);
-                                    }else if (mazeData[y][x] === 1) {
-                                        fill(0, 0, 0);
-                                    }else if (mazeData[y][x] === 2) {
-                                        fill(0, 255, 0);
-                                    }
-                                    rect(blockSize * (x - playerX), blockSize * (y - playerY), blockSize, blockSize);
-                                }
-                            }
-                        };
-                        var stuf = function(){
-                            pushMatrix();
-                            translate(width/2 - blockSize/2, height/2 - blockSize/2);
-                            first = false;
-                            background(255, 255, 255);
-                            drawMaze();
-                            player(0 + blockSize/4, 0 + blockSize/4);
-                            popMatrix();
-                        };
-                    }else if (mode === "e") {
-                        blockSize = 30;
-                        var drawMaze = function(){
-                            for(y = 0; y < mazeData.length; y++){
-                                for(x = 0; x < mazeData[y].length; x++){
-                                    if (mazeData[y][x] === 0) {
-                                        fill(255, 255, 255);
-                                    }else if (mazeData[y][x] === 1) {
-                                        fill(0, 0, 0);
-                                    }
-                                    rect(x * blockSize, y * blockSize, blockSize, blockSize);
-                                }
-                            }
-                        };
-                        var stuf = function(){
-                            first = false;
-                            background(255, 255, 255);
-                            drawMaze();
-                            player(blockSize * playerX + blockSize/4, blockSize * playerY + blockSize/4);
-                        };
                     }
-                }
+                };
+                var btn1 = new Button(200, 200, 20, 20, "e", "e", function(){
+                		    blockSize = width/3;
+	                        var stuf = function(){
+	                            pushMatrix();
+	                            translate(width/2 - blockSize/2, height/2 - blockSize/2);
+	                            first = false;
+	                            background(255, 255, 255);
+	                            drawMaze();
+	                            player(0 + blockSize/4, 0 + blockSize/4);
+	                            popMatrix();
+	                        };
+
+	                        var drawMaze = function(){
+	                            for(y = 0; y < mazeData.length; y++){
+	                                for(x = 0; x < mazeData[y].length; x++){
+	                                    if (mazeData[y][x] === 0) {
+	                                        fill(255, 255, 255);
+	                                    }else if (mazeData[y][x] === 1) {
+	                                        fill(0, 0, 0);
+	                                    }else if (mazeData[y][x] === 2) {
+	                                        fill(0, 255, 0);
+	                                    }
+	                                    rect(blockSize * (x - playerX), blockSize * (y - playerY), blockSize, blockSize);
+	                                }
+	                            }
+	                        };
+
+                });
+                var doCheck = function(){
+	                if (page == 2) {
+	                    if (mode === "h") {
+	                        blockSize = width/3;
+	                        var drawMaze = function(){
+	                            for(y = 0; y < mazeData.length; y++){
+	                                for(x = 0; x < mazeData[y].length; x++){
+	                                    if (mazeData[y][x] === 0) {
+	                                        fill(255, 255, 255);
+	                                    }else if (mazeData[y][x] === 1) {
+	                                        fill(0, 0, 0);
+	                                    }else if (mazeData[y][x] === 2) {
+	                                        fill(0, 255, 0);
+	                                    }
+	                                    rect(blockSize * (x - playerX), blockSize * (y - playerY), blockSize, blockSize);
+	                                }
+	                            }
+	                        };
+	                        var stuf = function(){
+	                            pushMatrix();
+	                            translate(width/2 - blockSize/2, height/2 - blockSize/2);
+	                            first = false;
+	                            background(255, 255, 255);
+	                            drawMaze();
+	                            player(0 + blockSize/4, 0 + blockSize/4);
+	                            popMatrix();
+	                        };
+	                    }else if (mode === "e") {
+	                        blockSize = 30;
+	                        var drawMaze = function(){
+	                            for(y = 0; y < mazeData.length; y++){
+	                                for(x = 0; x < mazeData[y].length; x++){
+	                                    if (mazeData[y][x] === 0) {
+	                                        fill(255, 255, 255);
+	                                    }else if (mazeData[y][x] === 1) {
+	                                        fill(0, 0, 0);
+	                                    }
+	                                    rect(x * blockSize, y * blockSize, blockSize, blockSize);
+	                                }
+	                            }
+	                        };
+	                        var stuf = function(){
+	                            first = false;
+	                            background(255, 255, 255);
+	                            drawMaze();
+	                            player(blockSize * playerX + blockSize/4, blockSize * playerY + blockSize/4);
+	                        };
+	                    }
+	                }
+
+                };                
                 var player = function(x, y){
                     fill(255, 0, 0);
                     rect(x, y, blockSize/2, blockSize/2);
                 }
-                //btn1.draw();
+                btn1.draw();
                 draw = function(){
                     if (page === 2) {
                         if (first) {
@@ -155,7 +184,7 @@
                     btn1.handleMouseClick();
                 }
                 keyPressed = function(){
-                    if (started) {
+                    if (page == 2) {
                         if (nlkey != keyCode && keyCode == 39 && mazeData[playerY][playerX + 1] == 0) {
                             playerX++;
                             nlkey = 37;
