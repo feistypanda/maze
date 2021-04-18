@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!-- This is based on DillingerLee's great template here:
+https://github.com/Team-Code/KA_Offline -->
+<html> 
+ <head>
+    <title>Processing.JS inside Webpages: Template</title> 
+</head>
+ <body>
+    <p align="center"> 
+	<!--This draws the Canvas on the webpage -->
+      <canvas id="mycanvas"></canvas> 
+    </p>
+ </body>
+ 
+ <!-- Run all the JavaScript stuff -->
+ <!-- Include the processing.js library -->
+ <!-- See https://khanacademy.zendesk.com/hc/en-us/articles/202260404-What-parts-of-ProcessingJS-does-Khan-Academy-support- for differences -->
+ <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script> 
+ 
+ <script>
+    var sketchProc = function(processingInstance) {
+     with (processingInstance) {
+        size(400, 400); 
+        frameRate(30);
+        var mazeData = [
+        [1, 1, 1, 1, 1],
+        [0, 0, 1, 0, 1],
+        [1, 0, 1, 0, 0],
+        [1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1],
+        ]
+        var blockSize = 30;
+        var px = 0;
+        var py = 1;
+        var pa = 0/180*PI;
+        var drawMaze = function(){
+            background(255, 255, 255)
+            for(var y = 0; y < mazeData.length; y++){
+                for(var x = 0; x < mazeData[y].length; x++){
+                    if (mazeData[y][x] === 0) {
+                        fill(255, 255, 255);
+                    }else if (mazeData[y][x] === 1) {
+                        fill(0, 0, 0);
+                    }
+                    rect(x * blockSize, y * blockSize, blockSize, blockSize);
+                    fill(0, 0, 255)
+                    rect(px * blockSize, py * blockSize, blockSize, blockSize)
+                }
+            }
+        };
+        drawMaze();
+        var c1 = function(){
+            if(mazeData[py + sin(pa)*1][px + cos(pa)*1] === 1){
+                pa -= 90;
+                c2();
+            }
+            px += cos(pa)*1;
+            py += sin(pa)*1;
+            pa -= 90;
+            if(mazeData[py + sin(pa)*1][px + cos()] === 1){
+                pa -= 90;
+                c1();
+            }
+            c1();
+        };
+        var c2 = function(){
+            if(mazeData[py + sin(pa)*1][px + cos()] === 1){
+                pa += 180;
+                c1();
+            }else{
+                pa += 180;
+            }
+        };
+        c1();
+    }};
+
+    // Get the canvas that Processing-js will use
+    var canvas = document.getElementById("mycanvas"); 
+    // Pass the function sketchProc (defined in myCode.js) to Processing's constructor.
+    var processingInstance = new Processing(canvas, sketchProc); 
+ </script>
+
+</html>

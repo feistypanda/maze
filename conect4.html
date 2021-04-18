@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!-- This is based on DillingerLee's great template here:
+https://github.com/Team-Code/KA_Offline -->
+<html> 
+ <head>
+    <title>Processing.JS inside Webpages: Template</title> 
+</head>
+ <body>
+    <p align="center"> 
+	<!--This draws the Canvas on the webpage -->
+      <canvas id="mycanvas"></canvas> 
+    </p>
+ </body>
+ 
+ <!-- Run all the JavaScript stuff -->
+ <!-- Include the processing.js library -->
+ <!-- See https://khanacademy.zendesk.com/hc/en-us/articles/202260404-What-parts-of-ProcessingJS-does-Khan-Academy-support- for differences -->
+ <script src="/Users/leomilberg/Documents/ProcessingJS/lib/processing.js"></script> 
+ 
+ <script>
+    var sketchProc = function(processingInstance) {
+        with (processingInstance) {
+            size(700, 600); 
+            frameRate(30);
+            
+            // ProgramCodeGoesHere
+            background(255, 255, 255);
+            var boardData = [
+                [0, 0, 0, 0, 0, 0], 
+                [0, 0, 0, 0, 0, 0], 
+                [0, 0, 0, 0, 0, 0], 
+                [0, 0, 0, 0, 0, 0], 
+                [0, 0, 0, 0, 0, 0], 
+                [0, 0, 0, 0, 0, 0], 
+                [0, 0, 0, 0, 0, 0]
+            ];
+            var xOff = 150;
+            var yOff = 100;
+            var colors = [1, 2];
+            var Button = function(x, y, bx, w, h, col, lab, labcol){
+                this.x = x;
+                this.y = y;
+                this.bx = bx;
+                this.w = w;
+                this.h = h;
+                this.col = col;
+                this.lab = lab;
+                this.labcol = labcol;
+            }
+            Button.prototype.draw = function(){
+                fill(this.col);
+                rect(this.x, this.y, this.w, this.h, 3);
+                fill(this.labcol);
+                text(this.lab, this.x + 17, this.y + 20)
+            };
+            Button.prototype.drop = function(){
+                
+            };
+            Button.prototype.isClick = function(x, y){
+                return x > this.x &&
+                       x < this.x + this.w &&
+                       y > this.y &&
+                       y < this.y + this.h; 
+            };
+            Button.prototype.handleClick = function(x, y){
+                if(this.isClick(x, y)){
+                    this.drop();
+                }
+            };
+            var btn1 = new Button(150+4, 60, 1, 40, 30, color(255, 0, 0), "1", color(0, 0, 0));
+            var btn2 = new Button(200+4, 60, 2, 40, 30, color(255, 0, 0), "2", color(0, 0, 0));
+            var btn3 = new Button(250+4, 60, 3, 40, 30, color(255, 0, 0), "3", color(0, 0, 0));
+            var btn4 = new Button(300+4, 60, 3, 40, 30, color(255, 0, 0), "4", color(0, 0, 0));
+            var btn5 = new Button(350+4, 60, 3, 40, 30, color(255, 0, 0), "5", color(0, 0, 0));
+            var btn6 = new Button(400+4, 60, 3, 40, 30, color(255, 0, 0), "6", color(0, 0, 0));
+            var btn7 = new Button(450+4, 60, 3, 40, 30, color(255, 0, 0), "7", color(0, 0, 0));
+            var drawboard = function(data){
+                fill(0, 0, 200);
+                noStroke();
+                rect(xOff, yOff, 50*7 + 10, 50*6 + 10, 5);
+                for(var i = 0; i < data.length; i++){
+                    for(var j = 0; j < data[i].length; j++){
+                        if(data[i][j] === 0){
+                            fill(255, 255, 255);
+                        }else if(data[j][i] === 1){
+                            fill(255, 0, 0);
+                        }else if(data[j][i] === 2){
+                            fill(255, 255, 0);
+                        }
+                        ellipse((i*50) + 50 + (xOff - 20), (j * 50) + 50 + (yOff - 20), 40, 40)
+                    }
+                }
+            };
+            drawboard(boardData);
+            btn1.draw();
+            btn2.draw();
+            btn3.draw();
+            btn4.draw();
+            btn5.draw();
+            btn6.draw();
+            btn7.draw();
+            draw = function(){};
+        }
+    };
+
+    // Get the canvas that Processing-js will use
+    var canvas = document.getElementById("mycanvas"); 
+    // Pass the function sketchProc (defined in myCode.js) to Processing's constructor.
+    var processingInstance = new Processing(canvas, sketchProc); 
+ </script>
+
+</html>
